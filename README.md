@@ -11,6 +11,7 @@ Following the Lora from [yatoracat's tutorial](https://note.com/yatoracat/n/n3ec
   - [Making a Lora with 1 image](#making-a-lora-with-1-image)
     - [Prepare training image](#prepare-training-image)
     - [Train LoRA](#train-lora)
+    - [Test Result](#test-result)
   - [Making a Lora with multiple images (TBC)](#making-a-lora-with-multiple-images-tbc)
   - [FAQ](#faq)
     - [How can I get the the prompt and parameters from an unedit generated image?](#how-can-i-get-the-the-prompt-and-parameters-from-an-unedit-generated-image)
@@ -50,7 +51,7 @@ We will use [Crosskemono 2.5 Model](https://civitai.com/models/11888?modelVersio
 
 I tried different approach and services available currently, and found [holostrawberry's training Guide on citiai](https://civitai.com/models/22530) is the most stable and reproducible one. Also it saves the hustle to setup the local environment since it uses Google Colab. Following are brief steps to train our one image LoRA.
 
-1. Open [Dataset_Maker](https://colab.research.google.com/github/hollowstrawberry/kohya-colab/blob/main/Dataset_Maker.ipynb) to prepare project and tag image in it stores the training data needed in your Google Drive. Following are values I used or modified in the Colab notebook. 
+1. Open [Dataset Maker](https://colab.research.google.com/github/hollowstrawberry/kohya-colab/blob/main/Dataset_Maker.ipynb) to prepare project and tag image in it stores the training data needed in your Google Drive. Following are values I used or modified in the Colab notebook. 
    - 1️⃣ Setup: give your project a name, eg. `lakto-lora`. Run the cell to create the project folder, it will ask you for permission to access your Google Drive.
    - 2️⃣ Scrape images from Gelbooru: upload the image we generated in previous step in `Loras/lakto-lora/dataset` Google drive folder.
    - 3️⃣ Curate your images: skip this step, it's for finding duplicates and we only have one image.
@@ -58,9 +59,15 @@ I tried different approach and services available currently, and found [holostra
    - 5️⃣ Curate your tags: add a `global_activation_tag` and it will be used to activate the LoRA in the prompt. I used `lakto_tiger` in this case. Leave the rest unchanged. 
    - The training dataset is now ready.
 
-2. 
+2. Open [Lora Trainer](https://colab.research.google.com/github/hollowstrawberry/kohya-colab/blob/main/Lora_Trainer.ipynb). There's one huge cell to setup hyper parameters. Change the field mentioned and leave the rest unchanged.
+   - ▶️ Setup
+     - Use the same `project name` and `folder_structure` as in the [Dataset Maker](https://colab.research.google.com/github/hollowstrawberry/kohya-colab/blob/main/Dataset_Maker.ipynb), it's where the training data is loaded.
+     - For `optional_custom_training_model_url`, we use [Crosskemono 2.5 Model](https://civitai.com/models/11888?modelVersionId=47368) as training model as well. Here should be a direct download link to the model, I only following way to work and if anyone and a better idea to get the direct link easier please let me know: Download the model in civitai page and cancel it immediately, paste the direct download link in your browser's downoad managing page.
+   - ▶️ Processing
+     - Select `flip_aug`: it will flip the image horizontally.
+   - Click "Run" button of the cell, training will start and take several minites to finish. The result wil be stored in the project `output` folder, `Loras/lakto-lora/output` in our case. Download `lakto-lora-10` and put it in `models/Lora/` folder.
 
-
+### Test Result
 
 
 ## Making a Lora with multiple images (TBC)
