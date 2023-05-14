@@ -24,7 +24,7 @@ Following the Lora from [yatoracat's tutorial](https://note.com/yatoracat/n/n3ec
 
 In this part, we will cover the steps to train a LoRA with one image of a red eye tiger, and see how the face look applies to a blue eye wolf.
 
-![image](1-one-image-lora\train\train-output.png)
+![image](https://github.com/puplakto/train-lora/blob/main/1-one-image-lora/train/train-output.png?raw=true)
 
 ### Prepare training image
 
@@ -42,6 +42,8 @@ We will use [Crosskemono 2.5 Model](https://civitai.com/models/11888?modelVersio
     Negative prompt: (boring_e621:1.0),(EasyNegative:0.8),(deformityv6:0.8),(bad-image-v2:0.8),(worst quality, low quality:1.4), (frame, border, film grain, greyscale:1.0),(text, signature, watermark, username:1.3), (female,girl,3D,realistic,CG,feral,nude,naked,animal:1.1), (bad anatomy:1.1), (bad hands, error, missing fingers), (extra digit, fewer digits),(bad face,bad nose,bad mouth,bad ear,bad eye,bad tail,bad eyebrow,bad eyelash,bad face:1.2),(different eye,different eyelash:1.1)
     Steps: 24, Sampler: DPM++ 2M Karras, CFG scale: 9, Seed: 3429169131, Size: 512x720, Model hash: 167e5bcb37, Model: crosskemonoFurryModel_crosskemono25
     ```
+
+![train](https://github.com/puplakto/train-lora/blob/main/1-one-image-lora/train/train.png?raw=true)
 
 1. Test result
 
