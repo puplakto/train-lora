@@ -10,6 +10,7 @@ Following the Lora from [yatoracat's tutorial](https://note.com/yatoracat/n/n3ec
   - [Prereqiuisites](#prereqiuisites)
   - [Making a Lora with 1 image](#making-a-lora-with-1-image)
     - [Prepare training image](#prepare-training-image)
+    - [Train LoRA](#train-lora)
   - [Making a Lora with multiple images (TBC)](#making-a-lora-with-multiple-images-tbc)
   - [FAQ](#faq)
     - [How can I get the the prompt and parameters from an unedit generated image?](#how-can-i-get-the-the-prompt-and-parameters-from-an-unedit-generated-image)
@@ -45,7 +46,22 @@ We will use [Crosskemono 2.5 Model](https://civitai.com/models/11888?modelVersio
 
 ![train](https://github.com/puplakto/train-lora/blob/main/1-one-image-lora/train/train.png?raw=true)
 
-1. Test result
+### Train LoRA
+
+I tried different approach and services available currently, and found [holostrawberry's training Guide on citiai](https://civitai.com/models/22530) is the most stable and reproducible one. Also it saves the hustle to setup the local environment since it uses Google Colab. Following are brief steps to train our one image LoRA.
+
+1. Open [Dataset_Maker](https://colab.research.google.com/github/hollowstrawberry/kohya-colab/blob/main/Dataset_Maker.ipynb) to prepare project and tag image in it stores the training data needed in your Google Drive. Following are values I used or modified in the Colab notebook. 
+   - 1️⃣ Setup: give your project a name, eg. `lakto-lora`. Run the cell to create the project folder, it will ask you for permission to access your Google Drive.
+   - 2️⃣ Scrape images from Gelbooru: upload the image we generated in previous step in `Loras/lakto-lora/dataset` Google drive folder.
+   - 3️⃣ Curate your images: skip this step, it's for finding duplicates and we only have one image.
+   - 4️⃣ Tag your images: run the cell with default values, it uses Waifu Diffusion to generte tags. A txt file will be created along side the image.
+   - 5️⃣ Curate your tags: add a `global_activation_tag` and it will be used to activate the LoRA in the prompt. I used `lakto_tiger` in this case. Leave the rest unchanged. 
+   - The training dataset is now ready.
+
+2. 
+
+
+
 
 ## Making a Lora with multiple images (TBC)
 
