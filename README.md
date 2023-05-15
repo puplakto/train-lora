@@ -1,25 +1,22 @@
-# Making your own LoRA
 
-As an AI art creator, generating charactors with stable patterns is a long desired feature. The outlook of the charator can vary a lot with a tiny change in the prompt, and it requires tedious post productions to "fix" those changes. Now with LoRA, a faster way to fine-tune the model to preserve the pattern is possible, and it gives us more control over the generated charactors.
+This is an experimental tutorial inpired by **[yatoracat LoRA guide: 1枚の絵から設定資料風画像を作る](https://note.com/yatoracat/n/n3ecae7e0881f)**, and the goal is to provide a reproducible way to train a LoRA model. 
 
-The goal of this guide is to provide a reproducible way to train a LoRA model. 
+As a hobby AI art creator, generating charactors with stable patterns is a long desired feature of mine. The look of the charator can vary a lot with a tiny change in the prompt, and it requires tedious post productions to "fix" those changes. Now with LoRA, a faster way to fine-tune the model to preserve the pattern is possible, and it gives us more control over the generated charactors.
 
-Following the Lora from [yatoracat's tutorial](https://note.com/yatoracat/n/n3ecae7e0881f), 
+## Table of Contents
 
-- [Making your own LoRA](#making-your-own-lora)
   - [Prereqiuisites](#prereqiuisites)
   - [Making a Lora with 1 image](#making-a-lora-with-1-image)
     - [Prepare training image](#prepare-training-image)
     - [Train LoRA](#train-lora)
     - [Test Result](#test-result)
-  - [Making a Lora with multiple images (TBC)](#making-a-lora-with-multiple-images-tbc)
   - [FAQ](#faq)
     - [How can I get the the prompt and parameters from an unedit generated image?](#how-can-i-get-the-the-prompt-and-parameters-from-an-unedit-generated-image)
 
 
 ## Prereqiuisites
 
-1. Basic knowledge to use [Stable Diffusion Web UI](https://github.com/AUTOMATIC1111/stable-diffusion-webui), you have used it to generate images before. It also means you have proper hardware to run software stack.
+1. Basic knowledge to use [Stable Diffusion Web UI](https://github.com/AUTOMATIC1111/stable-diffusion-webui), experiences of using it to generate images before. It also means the proper hardware to run software stack is ready.
 2. A Google account to use Colab.
 
 ## Making a Lora with 1 image
@@ -30,7 +27,7 @@ In this part, we will cover the steps to train a LoRA with one image of a red ey
 
 ### Prepare training image
 
-> You can use [the image in the repo](1-one-image-lora\train\train.png) and skip this part. Following are steps to recreate it.
+> To skip this part, use [the image in the repo](1-one-image-lora\train\train.png) as training image. Following are steps to recreate it.
 
 We will use [Crosskemono 2.5 Model](https://civitai.com/models/11888?modelVersionId=47368) to generate the training image, it will also be used to train LoRA and generate final outputs.
 
@@ -49,10 +46,10 @@ We will use [Crosskemono 2.5 Model](https://civitai.com/models/11888?modelVersio
 
 ### Train LoRA
 
-I tried different approach and services available currently, and found [holostrawberry's training Guide on citiai](https://civitai.com/models/22530) is the most stable and reproducible one. Also it saves the hustle to setup the local environment since it uses Google Colab. Following are brief steps to train our one image LoRA.
+I tried different approach and services available currently, and found [holostrawberry's training Guide on citiai](https://civitai.com/models/22530) is the most stable and reproducible one. It also saves the hustle to setup the local environment since it uses Google Colab. Following are brief steps to train our one image LoRA.
 
-1. Open [Dataset Maker](https://colab.research.google.com/github/hollowstrawberry/kohya-colab/blob/main/Dataset_Maker.ipynb) to prepare project and tag image in it stores the training data needed in your Google Drive. Following are values I used or modified in the Colab notebook. 
-   - 1️⃣ Setup: give your project a name, eg. `lakto-lora`. Run the cell to create the project folder, it will ask you for permission to access your Google Drive.
+1. Open [Dataset Maker](https://colab.research.google.com/github/hollowstrawberry/kohya-colab/blob/main/Dataset_Maker.ipynb) to prepare project and tag image in it stores the training data needed in Google Drive. Following are values I used or modified in the Colab notebook. 
+   - 1️⃣ Setup: give the project a name, eg. `lakto-lora`. Run the cell to create the project folder, it will ask for permission to access the Google Drive.
    - 2️⃣ Scrape images from Gelbooru: upload the image we generated in previous step in `Loras/lakto-lora/dataset` Google drive folder.
    - 3️⃣ Curate your images: skip this step, it's for finding duplicates and we only have one image.
    - 4️⃣ Tag your images: run the cell with default values, it uses Waifu Diffusion to generte tags. A txt file will be created along side the image.
@@ -62,15 +59,11 @@ I tried different approach and services available currently, and found [holostra
 2. Open [Lora Trainer](https://colab.research.google.com/github/hollowstrawberry/kohya-colab/blob/main/Lora_Trainer.ipynb). There's one huge cell to setup hyper parameters. Change the field mentioned and leave the rest unchanged.
    - ▶️ Setup
      - Use the same `project name` and `folder_structure` as in the [Dataset Maker](https://colab.research.google.com/github/hollowstrawberry/kohya-colab/blob/main/Dataset_Maker.ipynb), it's where the training data is loaded.
-     - For `optional_custom_training_model_url`, we use [Crosskemono 2.5 Model](https://civitai.com/models/11888?modelVersionId=47368) as training model as well. Here should be a direct download link to the model, I only following way to work and if anyone and a better idea to get the direct link easier please let me know: Download the model in civitai page and cancel it immediately, paste the direct download link in your browser's downoad managing page.
+     - For `optional_custom_training_model_url`, we use [Crosskemono 2.5 Model](https://civitai.com/models/11888?modelVersionId=47368) as training model as well. Here should be a direct download link to the model, I only following way to work and if anyone and a better idea to get the direct link easier please let me know: Download the model in civitai page and cancel it immediately, paste the direct download link from the browser's downoad managing page.
    - ▶️ Processing
      - Select `flip_aug`: it will flip the image horizontally.
    - Click "Run" button of the cell, training will start and take several minites to finish. The result wil be stored in the project `output` folder, `Loras/lakto-lora/output` in our case. Download `lakto-lora-10` and put it in `models/Lora/` folder.
 
-### Test Result
-
-
-## Making a Lora with multiple images (TBC)
 
 ## FAQ
 
